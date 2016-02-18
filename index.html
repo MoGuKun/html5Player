@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+	<style type="text/css">
+	*{
+		margin:0;
+		padding: 0;
+	}
+	body
+	{
+		background: #fafafa;
+	}
+	.slider
+	{
+		position: relative;
+		/*width: 100px;*/
+		height: 5px;
+		/*margin-top: 10px;*/
+		background-color: rgba(0,0,0,.3);
+		cursor: pointer;
+		-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.5);;
+		-moz-box-shadow: 0px 1px 2px rgba(0,0,0,.5);;
+		box-shadow: 0px 1px 2px rgba(0,0,0,.5);;
+	}
+	.slider .pace
+	{
+		position: absolute;
+		height: 100%;
+		/*background: #33d9ff;*/
+		background: steelblue;
+	}
+	.slider a
+	{
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		margin-top: -2.5px;
+		margin-left: -2.5px;
+		opacity: 0;
+		outline: 0;
+		border-color: #fff;
+		border-radius: 50%;
+		background-color: #fff;
+	}
+	.slider:hover a
+	{
+		
+		opacity: 1;
+	}
+
+	#videobox
+	{
+		position: relative;
+		width: 800px;
+		min-height: 500px;
+		_height:800px;
+		margin:0 auto;
+
+	}
+	.media
+	{
+		width:100%;
+		position:relative;
+		padding-bottom:56.25%;    /*需要用padding来维持16:9比例,也就是9除以16*/
+		height: 0;
+		overflow:hidden;
+		background: #fff;
+		box-shadow: 0px 0px 2px #888888;
+	}
+	.media video
+	{
+		position: absolute;
+		top:0;
+		left: 0;
+		width: 100%;
+		height: 100%
+
+	}
+	.media video::-webkit-media-controls-enclosure {
+    /*禁用播放器控制栏的样式*/
+    display: none !important;
+	}
+	#vd
+	{
+		cursor: pointer;
+		
+	}
+	
+
+
+
+    .ctrl
+    {
+    	position: absolute;
+    	left: 0;
+          bottom: 0;
+    	width: 100%;
+    	height: 50px;
+    	background: #fff;
+    	z-index: 2147483648;
+    	/*border: 3px solid #ccc;
+    	border-top: none;
+    	border-right: none;*/
+    	box-shadow: 0px 0px 2px #888888;
+
+    }
+
+    .progress
+    {
+		position: absolute;
+		top: -6px;
+		width: 100%;
+		transition: .3s;
+    }
+    .progress .slider
+    {
+		width: 100%;
+		background: #425067;
+		transition: .3s;
+    }
+    
+    .progress .slider .pace
+    {
+		z-index: 1;
+    }
+    .progress .slider a
+    {
+
+    }
+    .progress .slider .buffer
+    {
+    	position: absolute;
+		height: 100%;
+    	background: #ccc;
+    }
+    .progress:hover
+    {
+    	top:-11px;
+    }
+    .progress .slider:hover
+    {
+		height: 10px;
+
+    }
+    .progress .slider:hover a
+    {
+    	position: absolute;
+    	margin-left: -7.5px;
+    	width: 15px;
+    	height: 15px;
+    	background: #1c4587;
+    	z-index: 3;
+    }
+    
+	.play
+	{
+		
+		position: relative;
+		background: rgba(0,0,0,.3);
+		height: 100%;
+		width: 50px;
+		transition: .3s;
+
+	}
+	.play:hover
+	{
+		background: rgba(0,0,0,.5);
+	}
+    .pause:before{content:''; height:0; width:0; display:block; border:13.5px transparent solid;border-left-width:16px; border-right-width:0; border-left-color:#fff; position:absolute; top:10px; left:16px;}
+
+	.playing:before, .playing:after{content:''; height:25px; width:7px; display:block; background:#fff; position:absolute; top:12px; left:14px;}
+
+	.playing:after{left:26px;}
+
+	.timer
+	{
+		margin-left: 30px;
+		text-align: center;
+		height: 100%;
+		line-height:55px;
+	}
+	.timer label
+	{
+		font-size: 12px;
+		color: #888;
+	}
+
+	.repeat
+	{
+		position: relative;
+		margin: 8px 10px;
+		opacity: 0.5;
+		transition: .3s;
+	}
+	.repeat:hover
+	{
+		opacity: 1;
+	}
+	.repeat.enable
+	{
+		color: #66ffff;
+		opacity: 1;
+	}
+	.arrow1
+	{position: absolute;}
+	.arrow1:before/*弯角*/
+	{
+		content: '';
+		position: absolute;
+		top: 5px;
+		left: 0;
+		height: 9px;
+		width: 15px;
+		display: block;
+		border-top: 3px #333 solid;
+		border-left: 3px #333 solid;
+		border-radius: 8px 0 0 0;
+
+
+	}
+	.arrow1:after/*三角形*/
+	{
+		content: '';
+		position: absolute;
+		top: 1.5px;
+		left: 17px;
+		height: 0;
+		width: 0;
+		display: block;
+		border:6px transparent solid;
+		border-left-width: 7px;
+		border-right-width: 0;
+		border-left-color: #333;
+	}
+	.arrow2
+	{
+		position: absolute;
+		top: 15px;
+		left: 0;
+	}
+	.arrow2:before/*三角形*/
+	{
+		content: '';
+		position: absolute;
+		top: 1.5px;
+		left: 3px;
+		height: 0;
+		width: 0;
+		display: block;
+		border:6px transparent solid;
+		border-right-width: 7px;
+		border-left-width: 0;
+		border-right-color: #333;
+	}
+
+	.arrow2:after/*弯角*/
+	{
+		content: '';
+		position: absolute;
+		top: -4px;
+		left: 9px;
+		height: 9px;
+		width: 15px;
+		display: block;
+		border-right: 3px #333 solid;
+		border-bottom: 3px #333 solid;
+		
+		border-radius: 0 0 8px 0;
+
+
+	}
+	.enable .arrow1:before,.enable .arrow2:after
+	{
+		border-color: skyblue;
+	}
+	.enable .arrow1:after
+	{
+		border-left-color:skyblue;
+	}
+	.enable .arrow2:before
+	{
+		border-right-color:skyblue;
+	}
+
+	.icon
+	{
+		width: 24px;
+		height: 24px;
+		line-height: 25px;
+		cursor: pointer;
+	}
+	.volume
+	{
+		margin: 10px 10px;
+	}
+	.volume .slider
+	{
+		margin-top: 10px;
+		width: 100px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-ms-border-radius: 5px;
+		-o-border-radius: 5px;
+		border-radius: 5px;
+
+	}
+	.volume .slider .pace
+	{
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-ms-border-radius: 5px;
+		-o-border-radius: 5px;
+		border-radius: 5px;
+	}
+	.mute
+	{
+		background-image: url(img/volume.png);
+		margin: 0px 10px;
+		transition: .3s;
+	}
+	.mute.enable
+	{
+		background-image: url(img/mute.png);
+	}
+	
+
+	#fullScreenBtn
+	{
+		position: relative;
+		margin: 10px 10px;
+		width: 25px;
+		height: 25px;
+		border: 2px #333 solid;
+		opacity: .5;
+		transition: .3s;
+	}
+	#fullScreenBtn.enable
+	{
+		opacity: 1;
+	}
+	#fullScreenBtn:hover
+	{
+		opacity: 1;
+	}
+	#fullScreenBtn:before
+	{
+		content: "";
+		position: absolute;
+		top:5px;
+		left: -2px;
+		width: 29px;
+		height: 15px;
+		display: block;
+		background-color: #fff;
+		z-index: 1;
+
+	}
+	#fullScreenBtn:after
+	{
+		content: "";
+		position: absolute;
+		top: -2px;
+		left: 5px;
+		width: 15px;
+		height: 29px;
+		display: block;
+		background-color: #fff;
+		z-index: 1;
+	}
+	.full2
+	{
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		background-color: #333;
+		margin: 2.5px;
+		z-index: 3;
+	}
+	.enable#fullScreenBtn
+	{
+		border-color: skyblue;
+	}
+	/*.enable.fullScreen:before,.enable.fullScreen:after
+	{
+		background-color: #0066cc;
+	}*/
+	.enable .full2
+	{
+		background-color:skyblue;
+	}
+
+
+
+
+
+	.left
+	{
+		float: left;
+	}
+	.right
+	{
+		float: right;
+	}
+	.clear
+	{
+		clear: both;
+	}
+
+
+	.border{
+        width:0;
+         height:0;
+             border-bottom:100px #F00 solid;
+            border-top:100px #00F solid;
+            border-left:100px #063 solid;
+          border-right:100px #30C solid;
+          border-radius: 50%;
+    }
+	.iconlist
+	{
+		margin-top: 10px;
+		margin-left: 60px;
+	}
+
+
+span{height:40px; width:40px; display:block; position:relative;} 
+
+.demoSpan1{height:32px; width:32px; border:4px #333 solid; border-radius:100%;-webkit-border-radius:100%;-moz-border-radius:100%;}
+.demoSpan1:before{content:''; height:4px; width:40px; display:block; position:absolute; top:14px; left:-4px; background:#fff; z-index:1;}
+
+.demoSpan1:after{content:''; height:40px; width:4px; display:block; position:absolute; top:-4px; left:14px; background:#fff; z-index:1;}
+
+.demoSpan2{height:20px; width:20px; background:#333; border-radius:100%;-webkit-border-radius:100%;-moz-border-radius:100%; margin-top:6px;margin-left: 6px;}
+
+
+
+
+
+	</style>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+<body>
+	<div id="videobox">
+
+		<div class="media">
+		<!-- poster="loading.gif" -->
+			<video id="vd" >
+			<source src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+				<source src="media/baobao.mp4" type="video/mp4">
+				<!-- <object data="media/1.mp4" width="100%" height="100%">
+				    <embed width="100%" height="100%" src="media/1.mp4" />
+				</object> -->
+				<!-- <object width="320" height="240" type="application/x-shockwave-flash" data="flashmediaelement.swf">
+				    <param name="movie" value="flashmediaelement.swf" />
+				    <param name="flashvars" value="controls=true&file=media/baobao.mp4" />
+				</object> -->
+				your browser does not support the video tag 
+			</video>
+		</div>
+		<div class="ctrl">
+			<div class="progress">
+				<div class="slider">
+					<div class="pace"></div>
+					<div class="buffer"></div>
+				</div>
+			</div>
+			<div class="play pause left"></div>
+			<div class="timer left">
+				<label class="nowTrack"></label>
+				<label class="videoDuration"></label>
+			</div>
+			<div id="fullScreenBtn" class=" icon right">
+				<div class="full2"></div>
+			</div>
+			<div class="repeat icon right ">
+				<span class="arrow1"></span>
+				<span class="arrow2"></span>
+			</div>
+
+			<div class="volume right">
+				<div class="mute icon left"></div>
+				<div class="slider left">
+					<div class="pace"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="border">
+		
+	</div> -->
+
+	<div class="iconlist ">
+		<span class="demoSpan1">
+			<span class="demoSpan2">
+			</span>
+		</span>
+	</div>
+	<div class="iconlist ">
+		<span class="full">
+			<span class="full2"></span>
+		</span>
+	</div>
+	<div class="ziti">
+		<i class="fa fa-circle"></i>
+	</div>
+	<!-- <div class="full icon "></div> -->
+	<div align="center" style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+		<table class="intro " style="margin:0px 0px 1.714285714rem; padding:0px; border:none; font-size:0.857142857rem; vertical-align:baseline; border-collapse:collapse; border-spacing:0px; color:rgb(117,117,117); line-height:2; width:644px">
+			<tbody style="margin:0px; padding:0px; border:0px; font-size:12px; vertical-align:baseline">
+				<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+					<th align="left" style="margin:0px; padding:0px; border:0px; font-size:0.785714286rem; vertical-align:baseline; line-height:2.181818182; text-transform:uppercase; color:rgb(99,99,99); width:161px">
+					属性</th>
+					<th align="left" width="75%" style="margin:0px; padding:0px; border:0px; font-size:0.785714286rem; vertical-align:baseline; line-height:2.181818182; text-transform:uppercase; color:rgb(99,99,99)">
+					描述</th>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+				<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+				audioTracks</td>
+				<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回可用的音轨列表（MultipleTrackList对象）</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			autoplay</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			媒体加载后自动播放</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			buffered</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回缓冲部件的时间范围(TimeRanges对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			controller</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前的媒体控制器（MediaController对象）</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			controls</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			显示播控控件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			crossOrigin</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			CORS设置</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			currentSrc</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前媒体的URL</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			currentTime</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前播放的时间，单位秒</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			defaultMuted</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			缺省是否静音</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			defaultPlaybackRate</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			播控的缺省倍速</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			duration</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回媒体的播放总时长，单位秒</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			ended</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前播放是否结束标志</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			error</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前播放的错误状态</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			initialTime</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回初始播放的位置</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			loop</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			是否循环播放</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			mediaGroup</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前音视频所属媒体组&nbsp;(用来链接多个音视频标签)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px; height:21px">
+			muted</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; height:21px">
+			是否静音</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			networkState</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前网络状态</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			paused</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			是否暂停</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			playbackRate</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			播放的倍速</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			played</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前播放部件已经播放的时间范围(TimeRanges对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px; height:21px">
+			preload</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; height:21px">
+			页面加载时是否同时加载音视频</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			readyState</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前的准备状态</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			seekable</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前可跳转部件的时间范围(TimeRanges对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			seeking</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回用户是否做了跳转操作</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px; height:21px">
+			src</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; height:21px">
+			当前音视频源的URL</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			startOffsetTime</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回当前的时间偏移(Date对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			textTracks</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回可用的文本轨迹(TextTrackList对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			videoTracks</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			返回可用的视频轨迹(VideoTrackList对象)</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; width:151px">
+			volume</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			音量值</td>
+			</tr>
+			</tbody>
+			</table>
+			<table class="intro " align="center" style="margin:0px 0px 1.714285714rem; padding:0px; border:none; font-size:0.857142857rem; vertical-align:baseline; border-collapse:collapse; border-spacing:0px; color:rgb(117,117,117); line-height:2; width:644px">
+			<tbody style="margin:0px; padding:0px; border:0px; font-size:12px; vertical-align:baseline">
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<th align="left" width="25%" style="margin:0px; padding:0px; border:0px; font-size:0.785714286rem; vertical-align:baseline; line-height:2.181818182; text-transform:uppercase; color:rgb(99,99,99)">
+			事件</th>
+			<th align="left" width="75%" style="margin:0px; padding:0px; border:0px; font-size:0.785714286rem; vertical-align:baseline; line-height:2.181818182; text-transform:uppercase; color:rgb(99,99,99)">
+			描述</th>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			abort</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当音视频加载被异常终止时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			canplay</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当浏览器可以开始播放该音视频时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			canplaythrough</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当浏览器可以开始播放该音视频到结束而无需因缓冲而停止时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; height:21px">
+			durationchange</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline; height:21px">
+			当媒体的总时长改变时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			emptied</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前播放列表为空时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			ended</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前播放列表结束时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			error</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当加载媒体发生错误时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			loadeddata</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当加载媒体数据时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			loadedmetadata</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当收到总时长，分辨率和字轨等metadata时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			loadstart</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当开始查找媒体数据时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			pause</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当媒体暂停时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			play</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当媒体播放时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			playing</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当媒体从因缓冲而引起的暂停和停止恢复到播放时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			progress</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当获取到媒体数据时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			ratechange</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当播放倍数改变时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			seeked</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当用户完成跳转时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			seeking</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当用户正执行跳转时操作的时候产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			stalled</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当试图获取媒体数据，但数据还不可用时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			suspend</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当获取不到数据时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			timeupdate</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前播放位置发生改变时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			volumechange</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当前音量发生改变时产生该事件</td>
+			</tr>
+			<tr style="margin:0px; padding:0px; border:0px; vertical-align:baseline">
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			waiting</td>
+			<td style="margin:0px; padding:6px 10px 6px 0px; border-width:1px 0px 0px; border-top-style:solid; border-top-color:rgb(237,237,237); vertical-align:baseline">
+			当视频因缓冲下一帧而停止时产生该事件</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+	
+	<script type="text/javascript">
+		var video = document.getElementById('vd');
+		var timeout;
+		var setProgress = function(value)
+		{
+			var currentSec = parseInt(value %60) < 10 ? '0'+ parseInt(value%60) : parseInt(value%60);
+			var mediaTime = parseInt(video.duration /60) + ':' + parseInt(video.duration%60);
+			var radio = value / video.duration * 100;
+			$('.timer .nowTrack').html(parseInt(value/60) + ':' + currentSec);
+			$('.timer .videoDuration').html( '/' + mediaTime);
+			$('.progress .pace').css('width', radio+ '%');
+			$('.progress .slider a').css('left', radio + '%');
+			console.log('radio'+radio);
+			
+		}
+		var updateProgress = function()
+		{
+			setProgress(video.currentTime);
+		}
+		$('.progress .slider').slider({
+			step:0.01,
+			slide: function(event,ui)
+			{
+				setProgress(video.duration * ui.value / 100);
+				clearInterval(timeout);
+			},
+			stop: function(event,ui)
+			{
+				console.log('ui'+ui.value);
+				console.log('curtime'+video.currentTime);
+				console.log('duration:'+video.duration);
+				video.currentTime = video.duration * ui.value /100;
+
+				timeout = setInterval(updateProgress, 500);
+			}
+		});
+
+		var setVolume = function(value)
+		{
+			video.volume = localStorage.volume = value;
+			$('.volume .pace').css('width', value *100 + '%');
+			$('.volume .slider a').css('left', value *100 + '%');
+		}
+
+		var volume = localStorage.volume || 0.8;
+		console.log(volume);
+		$('.volume .slider').slider({
+			min:0,
+			max:1,
+			step:0.01,
+			slide: function(event,ui){
+				setVolume(ui.value);
+				$(this).addClass('enable');
+				if(ui.value==0)
+				{
+					$('.mute').addClass('enable');
+				}
+				else
+				{
+					$('.mute').removeClass('enable');
+				}
+			},
+			stop:function(){
+				$(this).removeClass('enable');
+			}
+		}).children('.pace').css('width', volume*100 +'%');
+		$('.volume .slider').children('a').css('left', volume*100 +'%');
+		$('#vd').on('click', function(){
+			playPause();
+		});
+		$('#vd').on('dblclick', function(){
+			if($('#fullScreenBtn').hasClass('enable'))
+			{
+				
+				exitFullscreen();
+				$('#fullScreenBtn').removeClass('enable');
+			}
+			else
+			{
+				$('#fullScreenBtn').addClass('enable');
+				console.log('dbl');
+				requestFullScreen(document.getElementById('vd')); 
+			} 
+		});
+		$('.play').on('click', function(){
+			playPause();
+			
+		})
+		// $('.volume').on('click', function(){
+		// 	if($(this).hasClass('enable'))
+		// 	{
+		// 		$(this).removeClass('enable');
+		// 	}
+		// 	else
+		// 	{
+		// 		$(this).addClass('enable');
+		// 	}
+		// })
+
+		$('.mute').on('click', function(){
+			console.log("volume"+volume);
+			console.log("localStorage"+localStorage.volume);
+			console.log("videovolume"+video.volume);
+			if($(this).hasClass('enable'))
+			{
+				
+				
+				$(this).removeClass('enable');
+				setVolume(0.8);
+			}
+			else
+			{
+				$(this).addClass('enable');
+				// volume = 0;
+				setVolume(0);
+			}
+		})
+		$('.repeat').on('click', function(){
+			if($(this).hasClass('enable'))
+			{
+				
+				
+				$(this).removeClass('enable');
+			}
+			else
+			{
+				$(this).addClass('enable');
+			}
+		})
+		$('#fullScreenBtn').on('click', function(){
+			if($(this).hasClass('enable'))
+			{
+				
+				exitFullscreen();
+				$(this).removeClass('enable');
+			}
+			else
+			{
+				$(this).addClass('enable');
+				console.log('1');
+				requestFullScreen(document.getElementById('vd')); 
+			}
+		})
+		function playPause()//
+		{
+			if(video.paused)
+			{
+				video.play();
+				timeout = setInterval(updateProgress,500);
+				$('.play').removeClass('pause');
+				$('.play').addClass('playing');
+				console.log(video.paused);
+			}
+			else
+			{
+				clearInterval(updateProgress);
+				video.pause();
+				
+				$('.play').removeClass('playing');
+				$('.play').addClass('pause');
+			}
+			
+		}
+		function mute()
+		{
+			console.log(vd.muted);
+			if(vd.muted)
+			{
+				vd.muted = "muted";
+			}
+			else
+			{
+				vd.muted = "";
+			}
+			
+		}
+
+		//进入全屏
+		function requestFullScreen(de) {
+		    // var de = document.documentElement;
+		    if (de.requestFullscreen) {
+		        de.requestFullscreen();
+		    } else if (de.mozRequestFullScreen) {
+		        de.mozRequestFullScreen();
+		    } else if (de.webkitRequestFullScreen) {
+		        de.webkitRequestFullScreen();
+		    }else{
+        		var docBody  = document.body;
+        		var videobox  = document.getElementById('videobox');
+        		var  cssText = 'width:100%;height:100%;overflow:hidden;';
+        		de.style.cssText = cssText;
+        		docBody.style.cssText = cssText;
+        		videobox.style.cssText = cssText+';'+'margin:0px;padding:0px;';
+        		document.IsFullScreen = true;
+ 
+      }
+		}
+		//退出全屏
+		function exitFullscreen() {
+		    var de = document;
+		    if (de.exitFullscreen) {
+		        de.exitFullscreen();
+		    } else if (de.mozCancelFullScreen) {
+		        de.mozCancelFullScreen();
+		    } else if (de.webkitCancelFullScreen) {
+		        de.webkitCancelFullScreen();
+		    }else{
+        		var docHtml  = document.documentElement;
+        		var docBody  = document.body;
+        		var videobox  = document.getElementById('videobox');
+        		docHtml.style.cssText = "";
+        		docBody.style.cssText = "";
+        		videobox.style.cssText = "";
+        		document.IsFullScreen = false;
+    		}	
+		}
+
+		// document.getElementById('fullScreenBtn').addEventListener('click',function(){
+		//     requestFullScreen(document.getElementById('video')); 
+		//     window.setTimeout(function exit(){
+		// //檢查瀏覽器是否處於全屏
+		// if(invokeFieldOrMethod(document,'FullScreen') || invokeFieldOrMethod(document,'IsFullScreen') || document.IsFullScreen)
+		// {
+		// exitFullscreen();
+		// }
+		//    },5*1000);
+		// },false);
+
+		$(function(){
+			//使用 onloadedmetadata 事件获取视频的时间长度，使用 ontimeupdate 事件获取视频当前播放的进度
+			if(volume ==0)
+			{
+				$('.mute').addClass('enable');
+			}
+			
+			// video.onloadedmetadata = function () { 
+			// 	// var vLength = video.duration; 
+			// 	// console.log(vLength); 
+			// 	$('.nowTrack').html('0:00 ');
+			// 	$('.nowTrack').css('color','background-color:#0099cc');
+			// 	$('.videoDuration').html('/ '+parseInt(video.duration/60)+':'+parseInt(video.duration%60));
+				video.ontimeupdate = function () { 
+					// var min = parseInt(video.currentTime/60)>1 ? '0':parseInt(video.currentTime/60);
+					// var sec = parseInt(video.currentTime%60)<10? '0'+parseInt(video.currentTime%60):parseInt(video.currentTime%60);
+					// console.log(sec);
+					// $('.nowTrack').html(min+':'+sec+' ');
+					
+					if(video.ended)
+					{
+						$('.play').removeClass('playing');
+						$('.play').addClass('pause');
+					}
+				};
+				video.addEventListener('canplay',function(){
+					var bufferValue =video.buffered.end(0) / video.duration * 100;
+					console.log('bufferValue'+bufferValue);
+					console.log('bufferValue length'+video.buffered.length);
+					$('.progress .slider .buffer').css('width', bufferValue + '%');
+				})
+				
+			// }
+			function bufferBar(){
+			        bufferTimer = setInterval(function(){
+			            var bufferIndex = video.buffered.length;
+			            if (bufferIndex > 0 && video.buffered != undefined) {
+			                var bufferValue = video.buffered.end(bufferIndex-1)/video.duration*324;
+			                $('.buffer').style.width = parseInt(bufferValue)+'px';
+			 
+			                if (Math.abs(video.duration - video.buffered.end(bufferIndex-1)) <1) {
+			                    $('.buffer').style.width = 324+'px';
+			                    clearInterval(bufferTimer);
+			                };
+			            };
+			        },1000);
+			    }
+			
+			
+		})
+		
+	</script>
+</body>
+</html>
